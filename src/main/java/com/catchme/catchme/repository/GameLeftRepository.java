@@ -1,6 +1,6 @@
 package com.catchme.catchme.repository;
 
-import com.catchme.catchme.beans.GameLeft;
+import com.catchme.catchme.entity.GameLeft;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
