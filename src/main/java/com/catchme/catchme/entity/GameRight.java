@@ -1,10 +1,7 @@
-package com.catchme.catchme.beans;
+package com.catchme.catchme.entity;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Builder;
 
 import javax.persistence.*;
@@ -14,6 +11,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Data
 @EqualsAndHashCode
+@ToString
 @Entity
 @Table(name = "GameRight")
 public class GameRight {
