@@ -30,6 +30,8 @@ public class GameServiceImpl implements GameService {
             return stateMain;
         }
 
+        stateMain.setGameLeftRecord(0L);
+
         return stateMain;
     }
 
@@ -43,6 +45,8 @@ public class GameServiceImpl implements GameService {
             stateMain.setGameRightRecord(gameRight.getRecordValue());
             return stateMain;
         }
+
+        stateMain.setGameRightRecord(0L);
 
         return stateMain;
     }
@@ -60,6 +64,9 @@ public class GameServiceImpl implements GameService {
 
                 stateMain.setStatus(HttpStatus.OK);
 
+                return stateMain;
+            } else {
+                stateMain.setStatus(HttpStatus.CONFLICT);
                 return stateMain;
             }
         }
@@ -87,6 +94,9 @@ public class GameServiceImpl implements GameService {
 
                 stateMain.setStatus(HttpStatus.OK);
 
+                return stateMain;
+            } else {
+                stateMain.setStatus(HttpStatus.CONFLICT);
                 return stateMain;
             }
         }
