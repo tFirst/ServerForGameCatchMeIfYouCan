@@ -7,7 +7,10 @@ import com.catchme.catchme.repository.GameLeftRepository;
 import com.catchme.catchme.repository.GameRightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 
+
+@Service
 public class GameServiceImpl implements GameService {
 
     @Autowired
