@@ -26,10 +26,12 @@ public class GameServiceImpl implements GameService {
         GameLeft gameLeft = gameLeftRepository.findByUserId(userId);
 
         if (gameLeft != null) {
+            stateMain.setUserId(userId);
             stateMain.setGameLeftRecord(gameLeft.getRecordValue());
             return stateMain;
         }
 
+        stateMain.setUserId(userId);
         stateMain.setGameLeftRecord(0L);
 
         return stateMain;
@@ -42,10 +44,12 @@ public class GameServiceImpl implements GameService {
         GameRight gameRight = gameRightRepository.findByUserId(userId);
 
         if (gameRight != null) {
+            stateMain.setUserId(userId);
             stateMain.setGameRightRecord(gameRight.getRecordValue());
             return stateMain;
         }
 
+        stateMain.setUserId(userId);
         stateMain.setGameRightRecord(0L);
 
         return stateMain;
