@@ -4,22 +4,18 @@ package com.catchme.catchme.service.user;
 import com.catchme.catchme.common.StateMain;
 import com.catchme.catchme.entity.User;
 import com.catchme.catchme.repository.UsersRepository;
+import org.springframework.stereotype.Service;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Collection;
 
+@Service
 public class UsersServiceImpl implements UsersService {
 
     private final UsersRepository usersRepository;
 
     public UsersServiceImpl(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
-    }
-
-    @Override
-    public Collection<User> findAll() {
-        return null;
     }
 
     @Override
