@@ -31,13 +31,13 @@ public class GamesController {
         return gameService.getGameRightRecord(userId);
     }
 
-    @RequestMapping(path = "/saveGameLeft", method = RequestMethod.GET)
+    @RequestMapping(path = "/saveGameLeft", method = RequestMethod.POST)
     public StateMain saveGameLeft(@RequestParam Long userId,
                                   @RequestParam Long record) {
         return gameService.saveGameLeftRecord(userId, record);
     }
 
-    @RequestMapping(path = "/saveGameRight", method = RequestMethod.GET)
+    @RequestMapping(path = "/saveGameRight", method = RequestMethod.POST)
     public StateMain saveGameRight(@RequestParam Long userId,
                                    @RequestParam Long record) {
         return gameService.saveGameRightRecord(userId, record);
