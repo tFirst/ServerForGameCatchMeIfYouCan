@@ -31,7 +31,7 @@ public class GameServiceImpl implements GameService {
             return stateMain;
         }
 
-        System.out.println("test commit");
+        System.out.println("test commit1");
 
         stateMain.setUserId(userId);
         stateMain.setGameLeftRecord(0L);
