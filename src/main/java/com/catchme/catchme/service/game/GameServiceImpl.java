@@ -25,6 +25,8 @@ public class GameServiceImpl implements GameService {
 
         GameLeft gameLeft = gameLeftRepository.findByUserId(userId);
 
+        System.out.println("test push");
+
         if (gameLeft != null) {
             stateMain.setUserId(userId);
             stateMain.setGameLeftRecord(gameLeft.getRecordValue());
