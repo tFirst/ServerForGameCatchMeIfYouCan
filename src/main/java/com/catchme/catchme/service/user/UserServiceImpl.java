@@ -4,41 +4,48 @@ package com.catchme.catchme.service.user;
 import com.catchme.catchme.common.StateMain;
 import com.catchme.catchme.entity.User;
 import com.catchme.catchme.repository.UsersRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UsersRepository usersRepository;
 
+    @Autowired
     public UserServiceImpl(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
     }
 
+    @Transactional
     @Override
-    public StateMain auth(String deviceId) {
-        StateMain stateMain = new StateMain();
-        User user = usersRepository.findByDeviceId(deviceId);
+    public StateMain auth(final String deviceId) {
+        try {
+            StateMain stateMain = new StateMain();
+            User user = usersRepository.findByDeviceId(deviceId);
 
-        if (user == null) {
-            user = new User();
-            user.setDeviceId(deviceId);
-            user.setToken(getToken(deviceId));
-            usersRepository.save(user);
+            if (user == null) {
+                user = new User();
+                user.setDeviceId(deviceId);
+                user.setToken(getToken(deviceId));
+                usersRepository.save(user);
+            }
+
             stateMain.setUserId(user.getUserId());
+
+            return stateMain;
+        } catch (Exception e) {
+            System.err.println(e);
+            return null;
         }
-
-        stateMain.setUserId(user.getUserId());
-
-        return stateMain;
     }
 
     private static String getToken(String str) {
-        String generatedPassword = null;
         try {
+            String generatedPassword;
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(str.getBytes());
             byte[] bytes = md.digest();
@@ -47,10 +54,10 @@ public class UserServiceImpl implements UserService {
                 sb.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
             }
             generatedPassword = sb.toString();
+            return generatedPassword;
+        } catch (Exception e) {
+            System.err.println(e);
+            return null;
         }
-        catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return generatedPassword;
     }
 }

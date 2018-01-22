@@ -8,55 +8,73 @@ import com.catchme.catchme.repository.GameRightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
 public class GameServiceImpl implements GameService {
 
-    @Autowired
-    GameLeftRepository gameLeftRepository;
+    final private GameLeftRepository gameLeftRepository;
+
+    final private GameRightRepository gameRightRepository;
 
     @Autowired
-    GameRightRepository gameRightRepository;
+    public GameServiceImpl(GameLeftRepository gameLeftRepository, GameRightRepository gameRightRepository) {
+        this.gameLeftRepository = gameLeftRepository;
+        this.gameRightRepository = gameRightRepository;
+    }
 
+    @Transactional(readOnly = true)
     @Override
     public StateMain getGameLeftRecord(Long userId) {
-        StateMain stateMain = new StateMain();
+        try {
+            StateMain stateMain = new StateMain();
 
-        GameLeft gameLeft = gameLeftRepository.findByUserId(userId);
+            GameLeft gameLeft = gameLeftRepository.findByUserId(userId);
 
-        if (gameLeft != null) {
             stateMain.setUserId(userId);
-            stateMain.setGameLeftRecord(gameLeft.getRecordValue());
+
+            if (gameLeft == null) {
+                stateMain.setGameLeftRecord(0L);
+            } else {
+                stateMain.setGameLeftRecord(gameLeft.getRecordValue());
+            }
+
+            System.out.println("test commit1");
+
             return stateMain;
+        } catch (Exception e) {
+            System.err.println(e);
+            return null;
         }
-
-        System.out.println("test commit1");
-
-        stateMain.setUserId(userId);
-        stateMain.setGameLeftRecord(0L);
-
-        return stateMain;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public StateMain getGameRightRecord(Long userId) {
-        StateMain stateMain = new StateMain();
+        try {
+            StateMain stateMain = new StateMain();
 
-        GameRight gameRight = gameRightRepository.findByUserId(userId);
+            GameRight gameRight = gameRightRepository.findByUserId(userId);
 
-        if (gameRight != null) {
             stateMain.setUserId(userId);
-            stateMain.setGameRightRecord(gameRight.getRecordValue());
+
+            if (gameRight == null) {
+                stateMain.setGameLeftRecord(0L);
+            } else {
+                stateMain.setGameLeftRecord(gameRight.getRecordValue());
+            }
+
+            System.out.println("test commit1");
+
             return stateMain;
+        } catch (Exception e) {
+            System.err.println(e);
+            return null;
         }
-
-        stateMain.setUserId(userId);
-        stateMain.setGameRightRecord(0L);
-
-        return stateMain;
     }
 
+    @Transactional
     @Override
     public StateMain saveGameLeftRecord(Long userId, Long record) {
         StateMain stateMain = new StateMain();
@@ -64,7 +82,7 @@ public class GameServiceImpl implements GameService {
         GameLeft gameLeft = gameLeftRepository.findByUserId(userId);
 
         if (gameLeft != null) {
-            if (record > gameLeft.getRecordValue()) {
+            if (record.compareTo(gameLeft.getRecordValue()) > 0) {
                 gameLeft.setRecordValue(record);
                 gameLeftRepository.save(gameLeft);
 
@@ -94,7 +112,7 @@ public class GameServiceImpl implements GameService {
         GameRight gameRight = gameRightRepository.findByUserId(userId);
 
         if (gameRight != null) {
-            if (record > gameRight.getRecordValue()) {
+            if (record.compareTo(gameRight.getRecordValue()) > 0) {
                 gameRight.setRecordValue(record);
                 gameRightRepository.save(gameRight);
 
