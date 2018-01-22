@@ -1,4 +1,4 @@
-package com.catchme.catchme.web;
+package com.catchme.catchme.controller;
 
 import com.catchme.catchme.common.StateMain;
 import com.catchme.catchme.service.game.GameService;
@@ -10,36 +10,33 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/game")
+@RequestMapping(value = "/game", produces = {"application/json; charset=UTF-8"})
 public class GamesController {
 
-    private final
-    GameService gameService;
+    private final GameService gameService;
 
     @Autowired
     public GamesController(GameService gameService) {
         this.gameService = gameService;
     }
 
-    @RequestMapping(path = "/getGameLeft", method = RequestMethod.GET)
-    public StateMain getGameLeft(@RequestParam Long userId) {
+    @RequestMapping(value = "/getGameLeft", method = RequestMethod.GET)
+    public StateMain getGameLeft(@RequestParam("userId") Long userId) {
         return gameService.getGameLeftRecord(userId);
     }
 
-    @RequestMapping(path = "/getGameRight", method = RequestMethod.GET)
-    public StateMain getGameRight(@RequestParam Long userId) {
+    @RequestMapping(value = "/getGameRight", method = RequestMethod.GET)
+    public StateMain getGameRight(@RequestParam("userId") Long userId) {
         return gameService.getGameRightRecord(userId);
     }
 
-    @RequestMapping(path = "/saveGameLeft", method = RequestMethod.POST)
-    public StateMain saveGameLeft(@RequestParam Long userId,
-                                  @RequestParam Long record) {
+    @RequestMapping(value = "/saveGameLeft", method = RequestMethod.POST)
+    public StateMain saveGameLeft(@RequestParam("userId") Long userId, @RequestParam("record") Long record) {
         return gameService.saveGameLeftRecord(userId, record);
     }
 
-    @RequestMapping(path = "/saveGameRight", method = RequestMethod.POST)
-    public StateMain saveGameRight(@RequestParam Long userId,
-                                   @RequestParam Long record) {
+    @RequestMapping(value = "/saveGameRight", method = RequestMethod.POST)
+    public StateMain saveGameRight(@RequestParam("userId") Long userId, @RequestParam("record") Long record) {
         return gameService.saveGameRightRecord(userId, record);
     }
 }

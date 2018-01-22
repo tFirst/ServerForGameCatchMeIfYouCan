@@ -1,4 +1,4 @@
-package com.catchme.catchme.web;
+package com.catchme.catchme.controller;
 
 
 import com.catchme.catchme.common.StateMain;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/auth/user")
+@RequestMapping(value = "/auth/user", produces = {"application/json; charset=UTF-8"})
 public class UserController {
 
     private final UserService userService;
@@ -20,8 +20,8 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public StateMain getUser(@RequestParam String deviceId) {
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public StateMain getUser(@RequestParam("deviceId") String deviceId) {
         return userService.auth(deviceId);
     }
 }
