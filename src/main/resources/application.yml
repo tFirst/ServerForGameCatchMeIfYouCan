@@ -1,0 +1,14 @@
+server:
+  port: 8080
+  session:
+    timeout: 3600
+
+spring:
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://eu-cdbr-west-01.cleardb.com/heroku_64d5a3f18552d7b
+    username: bbbdd30bd21798
+    password: be79de06
+  jpa:
+    hibernate:
+      ddl-auto: update

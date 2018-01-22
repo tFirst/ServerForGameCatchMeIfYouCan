@@ -1,0 +1,14 @@
+server:
+  port: 8080
+  session:
+    timeout: 3600
+
+spring:
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost/game
+    username: root
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
